@@ -4,7 +4,7 @@
 
 const equal = require('assert').equal
 const generate = require('escodegen').generate
-const lave = require('..')
+const lave = require('.')
 
 const format = {compact: true, semicolons: false}
 const options = {generate: ast => generate(ast, {format})}
@@ -30,8 +30,8 @@ const tests = {
   sparse:    [ Array(10)         , `${g}.Array(10)`                    ],
   global:    [ (0,eval)('this')  , g                                   ],
   slice:     [ [].slice          , `${g}.Array.prototype.slice`        ],
-  cycle:     [ (o=>o[0]=o)([])   , `const $0=[null];$0[0]=$0;$0`       ],
-  dipole:    [ (o=>[o,o])({})    , 'const $0={};[$0,$0]'               ]
+  cycle:     [ (o=>o[0]=o)([])   , `const a=[null];a[0]=a;a`           ],
+  dipole:    [ (o=>[o,o])({})    , `const a={};[a,a]`                  ]
 }
 
 for (let i in tests) equal(s(tests[i][0]), tests[i][1], `

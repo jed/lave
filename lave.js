@@ -47,6 +47,13 @@ function isNativeFunction(fn) {
   return length === source.length
 }
 
+function Identifiers() { this.id = 0 }
+Identifiers.prototype.next = function() {
+  var id = (this.id++).toString(36)
+  try { Function(`var ${id}`); return id }
+  catch (e) { return this.next() }
+}
+
 export default function(value, options) {
   if (!options) options = {}
 
@@ -119,9 +126,10 @@ export default function(value, options) {
         return {type: 'VariableDeclarator', id, init: entry[0]}
       })
 
+    let ids = new Identifiers
     declarations
       .sort((a, b) => has(a.init, b.id) - has(b.init, a.id))
-      .forEach((declaration, i) => declaration.id.name = '$' + i)
+      .forEach(declaration => declaration.id.name = ids.next())
 
     return declarations
   }
