@@ -4,11 +4,9 @@ lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does
 
 ## Why not just use JSON.stringify?
 
-- JSON can't handle circular references
-- JSON can't render most JavaScript objects
-- JSON doesn't preserve object identity
-- JSON can't be minified
-- JSON can't render globals
+JSON is great data transport, but can only handle a subset of the objects expressible in a JavaScript runtime. This usually results in lossy serializations at best, and `TypeError: Converting circular structure to JSON` at worst. While we can get around such issues by writing JavaScript code to parse this JSON back into the structures we want, now we have to ship that code out of band, which can be a headache.
+
+Instead of writing a parser for a new language that _can_ represent arbitrary JavaScript runtime values, I built lave to use the best language for the job: JavaScript itself. This allows it to handle values that JSON chokes on:
 
 Type                | JavaScript          | JSON.stringify               | lave
 ------------------- | ------------------- | ---------------------------- | -------------------------
