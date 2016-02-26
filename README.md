@@ -39,7 +39,12 @@ data.push(data)
 
 const js = lave(data, {generate})
 /*
-const $0=(0,eval)('this'),$1=new $0.Buffer('MTIz','base64'),$2=new $0.Error('Nope'),$3=$0.Array,$4=[undefined,null,'123',123,true,/regexp/,new $0.String('123'),$1,new $0.Number(123),new $0.Boolean(true),new $0.Date(1456465549204),function (){},$2,[1,2,3],$3(10),$0,$3.prototype.slice,null];$1[0]=49;$1[1]=50;$1[2]=51;$2.stack=undefined;$4[17]=$4;$4;
+const $0=(0,eval)('this'),$1=new $0.Buffer('MTIz','base64'),
+$2=new $0.Error('Nope'),$3=$0.Array,$4=[undefined,null,'123',
+123,true,/regexp/,new $0.String('123'),$1,new $0.Number(123),
+new $0.Boolean(true),new $0.Date(1456465549204),function (){},
+$2,[1,2,3],$3(10),$0,$3.prototype.slice,null];$1[0]=49;
+$1[1]=50;$1[2]=51;$2.stack=undefined;$4[17]=$4;$4;
 */
 ```
 
