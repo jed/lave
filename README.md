@@ -26,11 +26,11 @@ lave attempts to build the most concise representation of an object, using all t
 
 - lave traverses the global object to cache paths for any host object. So if your structure contains `[].slice`, lave knows that you're looking for `Array.prototype.slice`, and uses that path in its place.
 
-- lave traverses your object, converting each value that it finds into an abstract syntax graph. It never converts the same object twice; instead it caches all nodes it creates and reuses them any time their corresponding value appears.
+- lave then traverses your object, converting each value that it finds into an abstract syntax graph. It never converts the same object twice; instead it caches all nodes it creates and reuses them any time their corresponding value appears.
 
-- lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with the corresponding identifier, converting the abstract syntax graph into a serializable abstract syntax tree.
+- lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with its corresponding identifier, converting the abstract syntax graph into a serializable abstract syntax tree.
 
-- finally, lave adds any statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
+- finally, lave adds any assignment statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
 
 ## Example
 
