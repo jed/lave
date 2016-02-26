@@ -8,7 +8,7 @@
     "rollup": "^0.25.4"
   },
   "scripts": {
-    "build": "bin/build.js",
-    "test": "npm run build && bin/test.js"
+    "build": "build.js",
+    "test": "npm run build && test.js"
   }
 }
