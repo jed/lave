@@ -1,6 +1,6 @@
 # lave
 
-lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does for JSON, taking an arbitrary object in memory and returning the code needed to create it.
+lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does for JSON, turning an arbitrary object in memory into the code needed to create it.
 
 ## Why not just use JSON.stringify?
 
@@ -10,6 +10,18 @@ lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does
 - JSON can't be minified
 - JSON can't render globals
 
+Type                | JavaScript        | JSON.stringify               | lave
+------------------- | ----------------- | ---------------------------- | -------------------------
+Circular references | `a={};a.self=a`   | TypeError                    | `const a={};a.self=a;a`
+Repeated references | `a={};[a, a]`     | `[{}, {}]`                   | `const a={};[a,a]`
+Global object       | `global`          | TypeError                    | `(0,eval)('this')`
+Built-in objects    | `Array.prototype` | `[]`                         | `Array.prototype`
+Boxed primitives    | `Object('abc')`   | `"abc"`                      | `Object('abc')`
+Functions           | `[function(){}]`  | `[null]`                     | `[function(){}]`
+Dates               | `new Date`        | `"2016-02-26T16:00:46.589Z"` | `new Date(1456502446589)`
+Sparse arrays       | `a=[];a[2]=0;a`   | `[null,null,0]`              | `const a=Array(3);a[2]=0`
+
+## How does lave work?
 
 ## Installation
 
