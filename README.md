@@ -12,9 +12,9 @@ lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does
 
 Type                | JavaScript        | JSON.stringify               | lave
 ------------------- | ----------------- | ---------------------------- | -------------------------
-Circular references | `a={};a.self=a`   | TypeError                    | `var a={};a.self=a;a`
+Circular references | `a={};a.self=a`   | :x: TypeError                | `var a={};a.self=a;a`
 Repeated references | `a={};[a, a]`     | `[{}, {}]`                   | `var a={};[a,a]`
-Global object       | `global`          | TypeError                    | `(0,eval)('this')`
+Global object       | `global`          | :x: TypeError                | `(0,eval)('this')`
 Built-in objects    | `Array.prototype` | `[]`                         | `Array.prototype`
 Boxed primitives    | `Object('abc')`   | `"abc"`                      | `Object('abc')`
 Functions           | `[function(){}]`  | `[null]`                     | `[function(){}]`
