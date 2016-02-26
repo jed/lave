@@ -153,7 +153,8 @@ export default function(value, options) {
     expressions.set(value, object)
 
     const names = Object.getOwnPropertyNames(value)
-    if (value instanceof String) names.splice(0, value.length)
+    if (value instanceof String ||
+        value instanceof Buffer) names.splice(0, value.length)
 
     const descriptors = new Map(names.map(name =>
       [name, Object.getOwnPropertyDescriptor(value, name)]
@@ -210,7 +211,6 @@ export default function(value, options) {
       case TypeError.prototype:
       case URIError.prototype:
         descriptors.delete('message')
-        if (!value.stack) descriptors.delete('stack')
 
         object.type = 'NewExpression'
         object.callee = expression(value.constructor)
