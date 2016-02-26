@@ -80,13 +80,16 @@ export default function(value, options) {
 
   statements.push(statement)
 
-  statements.unshift({
+  const declaration = {
     type: 'VariableDeclaration',
     declarations: declarations(statements),
     kind: 'const'
-  })
+  }
+
+  if (declaration.declarations.length) statements.unshift(declaration)
 
   const program = {type: 'Program', body: statements}
+  // return program
   const code = generate(program)
 
   return code.replace(functionPattern, (_, i) => Array.from(functions)[i])
@@ -211,6 +214,7 @@ export default function(value, options) {
       case TypeError.prototype:
       case URIError.prototype:
         descriptors.delete('message')
+        descriptors.delete('stack')
 
         object.type = 'NewExpression'
         object.callee = expression(value.constructor)
