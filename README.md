@@ -75,9 +75,14 @@ By default, lave takes an object and returns an abstract syntax tree (herein as 
 - `options` (optional): An object with any of the following properties:
   - `generate`: A function that takes an [ESTree][] AST and returns JavaScript code, such as through [escodegen][] or [babel-generator][]. If this is omitted, an AST will be returned, with any functions in the original object serialized using [toString][], and wrapped in an [eval][] call. If this is specified, a JavaScript string will be returned.
 
+---
+
+- Many thanks to [Jamen Marz][] for graciously providing the `lave` name on npm.
+
 [eval]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
 [JSON.stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
 [escodegen]: https://github.com/estools/escodegen
 [babel-generator]: https://github.com/babel/babel/tree/master/packages/babel-generator
 [ESTree]: https://github.com/estree/estree/blob/master/spec.md
 [toString]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString
+[Jamen Marz]: https://github.com/jamen
