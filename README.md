@@ -29,6 +29,35 @@ Object properties   | `a=[0,1]; a.b=2; a` | `[0,1]`                      | `var 
 - pulls expressions referenced twice or more into variable declarations
 - adds statements needed to fulfil circular references
 
+## Example
+
+Running the following file...
+
+```javascript
+var escodegen = require('escodegen')
+var lave = require('lave')
+
+var a = [function(){}, new Date, new Buffer('A'), global]
+a.splice(2, 0, a)
+
+var js = lave(a, escodegen.generate)
+console.log(js)
+```
+
+...will output the following JavaScript:
+
+```javascript
+var a = [
+    function (){},
+    new Date(1456522677247),
+    null,
+    new Buffer('QQ==', 'base64'),
+    (0, eval)('this')
+];
+a[2] = a;
+a;
+```
+
 ## Installation
 
     $ npm install lave
