@@ -1,6 +1,15 @@
 # lave
 
-lave is [eval] in reverse; it takes an arbitrary JavaScript object and returns the JavaScript code needed to recreate it.
+lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does for JSON, taking an arbitrary object in memory and returning the code needed to create it.
+
+## Why not just use JSON.stringify?
+
+- JSON can't handle circular references
+- JSON can't render most JavaScript objects
+- JSON doesn't preserve object identity
+- JSON can't be minified
+- JSON can't render globals
+
 
 ## Installation
 
@@ -9,11 +18,8 @@ lave is [eval] in reverse; it takes an arbitrary JavaScript object and returns t
 ## Example
 
 ```javascript
-const escodegen = require('escodegen')
-const lave = require('lave')
-
-const options = {format: {compact: true}}
-const generate = ast => escodegen.generate(ast, options)
+import escodegen from 'escodegen'
+import lave from 'lave'
 
 const data = [
   undefined,
@@ -37,7 +43,10 @@ const data = [
 
 data.push(data)
 
-const js = lave(data, {generate})
+const options = {format: {compact: true}}
+const js = lave(data, {
+  generate(ast) { return escodegen.generate(ast, options) }
+})
 /*
 const $0=(0,eval)('this'),$1=new $0.Error('Nope'),$2=$0.Array,$3=[undefined,
 null,'123',123,true,/regexp/,new $0.String('123'),new $0.Buffer('MTIz',
@@ -48,4 +57,4 @@ $3[17]=$3;$3;
 ```
 
 [eval]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
-
+[JSON.stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
