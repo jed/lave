@@ -1,0 +1,18 @@
+{
+  "name": "lave",
+  "version": "1.0.0",
+  "main": "index.js",
+  "jsnext:main": "lave.js",
+  "devDependencies": {
+    "acorn": "^3.0.4",
+    "babel-generator": "^6.5.0",
+    "babylon": "^6.5.2",
+    "escodegen": "^1.8.0",
+    "esprima": "^2.7.2",
+    "rollup": "^0.25.4"
+  },
+  "scripts": {
+    "build": "bin/build.js",
+    "test": "npm run build && bin/test.js"
+  }
+}
