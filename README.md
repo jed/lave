@@ -34,20 +34,22 @@ lave attempts to build the most concise representation of an object, using all t
 
 ## Example
 
-Running the following file...
+This command...
 
 ```javascript
-var escodegen = require('escodegen')
-var lave = require('lave')
+node << EOF
+  var generate = require('escodegen').generate
+  var lave = require('lave')
 
-var a = [function(){}, new Date, new Buffer('A'), global]
-a.splice(2, 0, a)
+  var a = [function(){}, new Date, new Buffer('A'), global]
+  a.splice(2, 0, a)
 
-var js = lave(a, escodegen.generate)
-console.log(js)
+  var js = lave(a, {generate})
+  console.log(js)
+EOF
 ```
 
-...will output the following JavaScript:
+...outputs the following JavaScript:
 
 ```javascript
 var a = [
