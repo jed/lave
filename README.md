@@ -6,7 +6,7 @@ lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does
 
 JSON is great data transport, but can only handle a subset of the objects expressible in a JavaScript runtime. This usually results in lossy serializations at best, and `TypeError: Converting circular structure to JSON` at worst. While we can get around such issues by writing JavaScript code to parse this JSON back into the structures we want, now we have to ship that code out of band, which can be a headache.
 
-Instead of writing a parser for a new language that _can_ represent arbitrary JavaScript runtime values, I built lave to use the best language for the job: JavaScript itself. This allows it to handle values that JSON chokes on:
+Instead of writing a parser for a new language that _can_ represent arbitrary JavaScript runtime values, I built lave to use the best language for the job: JavaScript itself. This allows it to handle the following structures that JSON can't.
 
 Type                | JavaScript          | JSON.stringify               | lave
 ------------------- | ------------------- | ---------------------------- | -------------------------
@@ -22,10 +22,15 @@ Object properties   | `a=[0,1]; a.b=2; a` | `[0,1]`                      | `var 
 
 ## How does lave work?
 
-- traverses the global object to capture accessors
-- traverses your object to convert it into an abstract syntax tree
-- pulls expressions referenced twice or more into variable declarations
-- adds statements needed to fulfil circular references
+lave attempts to build the most concise representation of an object, using all the syntax available in JavaScript. It does this in the following order:
+
+- lave traverses the global object to cache paths for any host object. So if your structure contains `[].slice`, lave knows that you're looking for `Array.prototype.slice`, and uses that path in its place.
+
+- lave traverses your object, converting each value that it finds into an abstract syntax graph. It never converts the same object twice; instead it caches all nodes it creates and reuses them any time their corresponding value appears.
+
+- lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with the corresponding identifier, converting the abstract syntax graph into a serializable abstract syntax tree.
+
+- finally, lave adds any statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
 
 ## Example
 
