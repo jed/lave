@@ -1,40 +1,40 @@
-#!/usr/bin/env node
-
 'use strict'
 
-const equal = require('assert').equal
-const generate = require('escodegen').generate
-const lave = require('.')
+import {equal} from 'assert'
+import {generate} from 'escodegen'
+import lave from '.'
+
+const tests = {
+  number:    [ 123                , `123`                               ],
+  string:    [ 'abc'              , `'abc'`                             ],
+  boolean:   [ true               , `true`                              ],
+  Number:    [ new Number(123)    , `Object(123)`                       ],
+  String:    [ new String('abc')  , `Object('abc')`                     ],
+  Boolean:   [ new Boolean(true)  , `Object(true)`                      ],
+  undefined: [ void 0             , `undefined`                         ],
+  null:      [ null               , `null`                              ],
+  RegExp:    [ /regexp/img        , `/regexp/gim`                       ],
+  Buffer:    [ new Buffer('A')    , `new Buffer('QQ==','base64')`       ],
+  Date:      [ new Date(1e12)     , `new Date(1000000000000)`           ],
+  Function:  [ [function (o){o}]  , `[function (o){o}]`                 ],
+  Error:     [ new Error('XXX')   , `new Error('XXX')`                  ],
+  Array:     [ [1,2,3]            , `[1,2,3]`                           ],
+  sparse:    [ Array(10)          , `Array(10)`                         ],
+  global:    [ root               , `(0,eval)('this')`                  ],
+  slice:     [ [].slice           , `Array.prototype.slice`             ],
+  cycle:     [ (a=>a[0]=a)([])    , `var a=[null];a[0]=a;a`             ],
+  dipole:    [ (a=>[a,a])({})     , `var a={};[a,a]`                    ]
+}
 
 const format = {compact: true, semicolons: false}
 const options = {generate: ast => generate(ast, {format})}
-const s = object => lave(object, options)
 
-const g = `(0,eval)('this')`
+for (let name in tests) {
+  let expected = tests[name][1]
+  let actual = lave(tests[name][0], options)
 
-const tests = {
-  number:    [ 123               , `123`                               ],
-  string:    [ 'abc'             , `'abc'`                             ],
-  boolean:   [ true              , `true`                              ],
-  Number:    [ new Number(123)   , `new(${g}).Number(123)`             ],
-  String:    [ new String('abc') , `new(${g}).String('abc')`           ],
-  Boolean:   [ new Boolean(true) , `new(${g}).Boolean(true)`           ],
-  undefined: [ void 0            , `undefined`                         ],
-  null:      [ null              , `null`                              ],
-  RegExp:    [ /regexp/img       , `/regexp/gim`                       ],
-  Buffer:    [ new Buffer('A')   , `new(${g}).Buffer('QQ==','base64')` ],
-  Date:      [ new Date(1e12)    , `new(${g}).Date(1000000000000)`     ],
-  Function:  [ function (o){o}   , `function (o){o}`                   ],
-  Error:     [ new Error('XXX')  , `new(${g}).Error('XXX')`            ],
-  Array:     [ [1,2,3]           , `[1,2,3]`                           ],
-  sparse:    [ Array(10)         , `${g}.Array(10)`                    ],
-  global:    [ (0,eval)('this')  , g                                   ],
-  slice:     [ [].slice          , `${g}.Array.prototype.slice`        ],
-  cycle:     [ (o=>o[0]=o)([])   , `const a=[null];a[0]=a;a`           ],
-  dipole:    [ (o=>[o,o])({})    , `const a={};[a,a]`                  ]
+  equal(actual, expected, `
+    expected ${name}: ${expected}
+    actual ${name}: ${actual}
+  `)
 }
-
-for (let i in tests) equal(s(tests[i][0]), tests[i][1], `
-  Expected: ${tests[i][1]}
-  Actual: ${s(tests[i][0])}
-`)
