@@ -10,5 +10,8 @@
   "scripts": {
     "build": "rollup lib/lave.js -f cjs -o index.js",
     "test": "npm run build && rollup test.js -e escodegen,assert,. -f cjs | node"
+  },
+  "engines": {
+    "node": ">= 4"
   }
 }
