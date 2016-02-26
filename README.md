@@ -18,7 +18,7 @@ Boxed primitives    | `Object('abc')`     | `"abc"`                      | `Obje
 Functions           | `[function(){}]`    | `[null]`                     | `[function(){}]`
 Dates               | `new Date`          | `"2016-02-26T16:00:46.589Z"` | `new Date(1456502446589)`
 Sparse arrays       | `a=[]; a[2]=0; a`   | `[null,null,0]`              | `var a=Array(3);a[2]=0`
-Object properties   | `a=[0,1]; a.b=2; a` | `[0,1]`                      | `var a=Array(3);a[2]=0`
+Object properties   | `a=[0,1]; a.b=2; a` | `[0,1]`                      | `var a=[0,1];a.b=2`
 
 ## How does lave work?
 
