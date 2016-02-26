@@ -71,11 +71,15 @@ a;
 
 By default, lave takes an object and returns an abstract syntax tree (herein as AST) representing the generated JavaScript.
 
-- `object` (required): The object to be stringified
-- `options` (optional): An object with any of the following properties:
+- `object`: The object to be stringified (required)
+- `options`: An object with any of the following properties (optional):
   - `generate`: A function that takes an [ESTree][] AST and returns JavaScript code, such as through [escodegen][] or [babel-generator][]. If this is omitted, an AST will be returned, with any functions in the original object serialized using [toString][], and wrapped in an [eval][] call. If this is specified, a JavaScript string will be returned.
+  - `format`: A string specifying the type of code to output, from the following:
+    - `expression` (default): Returns code in which the last statement is result expression, such as `var a={};[a, a];`. This is useful when the code is evaluated with [eval][].
+    - `function`: Returns the code as a function expression, such as `(function(){var a={};return[a, a]})`. This is useful for inlining as an expression without polluting scope.
+    - `module`: Returns the code as an ES6 module export, such as `var a={};export default[a, a];`. This is currently useful for integration with a module build process, such as [Rollup][] or [Babel][] transforms.
 
----
+## Addenda
 
 - Many thanks to [Jamen Marz][] for graciously providing the `lave` name on npm.
 
@@ -86,3 +90,5 @@ By default, lave takes an object and returns an abstract syntax tree (herein as 
 [ESTree]: https://github.com/estree/estree/blob/master/spec.md
 [toString]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString
 [Jamen Marz]: https://github.com/jamen
+[Rollup]: http://rollupjs.org
+[Babel]: http://babeljs.io/docs/plugins/transform-es2015-modules-commonjs

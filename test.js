@@ -1,7 +1,7 @@
 'use strict'
 
 import {equal} from 'assert'
-import {generate} from 'escodegen'
+import escodegen from 'escodegen'
 import lave from '.'
 
 const tests = {
@@ -27,7 +27,8 @@ const tests = {
 }
 
 const format = {compact: true, semicolons: false}
-const options = {generate: ast => generate(ast, {format})}
+const generate = ast => escodegen.generate(ast, {format})
+const options = {generate}
 
 for (let name in tests) {
   let expected = tests[name][1]
@@ -38,3 +39,9 @@ for (let name in tests) {
     actual ${name}: ${actual}
   `)
 }
+
+options.format = 'module'
+equal(lave(1, options), 'export default 1')
+
+options.format = 'function'
+equal(lave(1, options), '(function(){return 1})')
