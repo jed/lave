@@ -57,6 +57,8 @@ export default a;
 
 - **You want to colocate data and its dependent logic.** The past few years have seen a long overdue rethink of common best practices for web developers. From markup and logic in [React components][] to styles and markup in [Radium][], we've improved developer productivity by slicing concerns vertically (many concerns per component) instead of horizontally (many components per concern). Having the ability to ship tightly coupled logic and data in one file means fewer moving parts during deployment.
 
+- **You want to avoid runtime dependencies.** There are several libraries that give you the ability to serialize and parse graph data, but most of add a parser dependency to your recipients (in the case of JavaScript, usually a browser). Since lave requires only a JavaScript parser, you do not need to incorporate a runtime library to use it. If you prefer the safety of parsing without evaluation and don't mind the dependency, consider using something like [@benjamn][]'s excellent [arson][].
+
 ## How does lave work?
 
 lave uses all of the syntax available in JavaScript to build the most concise representation of an object, such as by preferring literals (`[1,2]`) over assignment (`var a=[];a[0]=1;a[1]=2`). Here's how it works:
@@ -67,7 +69,7 @@ lave uses all of the syntax available in JavaScript to build the most concise re
 
 - lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with its corresponding identifier. This process of removing [dipoles][] converts the abstract syntax graph into a serializable abstract syntax tree.
 
-- finally, lave adds any assignment statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
+- Finally, lave adds any assignment statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
 
 ## Installation
 
@@ -103,3 +105,5 @@ By default, lave takes an `object` and returns an abstract syntax tree (AST) rep
 [global objects]: http://perfectionkills.com/unnecessarily-comprehensive-look-into-a-rather-insignificant-issue-of-global-objects-creation/
 [React components]: https://facebook.github.io/react/docs/reusable-components.html
 [Radium]: https://github.com/FormidableLabs/radium
+[@benjamn]: https://github.com/benjamn
+[arson]: https://github.com/benjamn/arson
