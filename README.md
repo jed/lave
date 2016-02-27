@@ -1,6 +1,6 @@
 # lave [![Build Status](https://travis-ci.org/jed/lave.svg?branch=master)](https://travis-ci.org/jed/lave)
 
-lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does for JSON, turning an arbitrary object in memory into the code needed to create it.
+lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does for JSON, turning an arbitrary object in memory into the expression, function, or ES6 module needed to create it.
 
 ## Why not just use JSON.stringify?
 
@@ -12,26 +12,13 @@ Type                | JavaScript          | JSON.stringify                      
 ------------------- | ------------------- | -------------------------------------- | -------------------------
 Circular references | `a={}; a.self=a`    | :x: TypeError                          | :white_check_mark: `var a={};a.self=a;a`
 Repeated references | `a={}; [a, a]`      | :warning: `[{}, {}]`                   | :white_check_mark: `var a={};[a,a]`
-Global object       | `global`            | :x: TypeError                          | :white_check_mark: `(0,eval)('this')`
+Global object       | `global`            | :x: TypeError                          | :white_check_mark: `(0,eval)('this')` [?][global objects]
 Built-in objects    | `Array.prototype`   | :warning: `[]`                         | :white_check_mark: `Array.prototype`
 Boxed primitives    | `Object('abc')`     | :warning: `"abc"`                      | :white_check_mark: `Object('abc')`
 Functions           | `[function(){}]`    | :warning: `[null]`                     | :white_check_mark: `[function(){}]`
 Dates               | `new Date`          | :warning: `"2016-02-26T16:00:46.589Z"` | :white_check_mark: `new Date(1456502446589)`
 Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=Array(3);a[2]=0;a`
 Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
-
-
-## How does lave work?
-
-lave attempts to build the most concise representation of an object, using all the syntax available in JavaScript. It does this in the following order:
-
-- lave traverses the global object to cache paths for any host object. So if your structure contains `[].slice`, lave knows that you're looking for `Array.prototype.slice`, and uses that path in its place.
-
-- lave then traverses your object, converting each value that it finds into it's most idiomatic abstract syntax graph. It never converts the same object twice; instead it caches all nodes it creates and reuses them any time their corresponding value appears.
-
-- lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with its corresponding identifier. This process of removing [dipoles][] converts the abstract syntax graph into a serializable abstract syntax tree.
-
-- finally, lave adds any assignment statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
 
 ## Example
 
@@ -64,6 +51,19 @@ a[2] = a;
 a;
 ```
 
+
+## How does lave work?
+
+lave uses all of the syntax available in JavaScript to build the most concise representation of an object, such as by preferring literals over assignment. It does this in the following order:
+
+- lave traverses the global object to cache paths for any host object. So if your structure contains `[].slice`, lave knows that you're looking for `Array.prototype.slice`, and uses that path in its place.
+
+- lave then traverses your object, converting each value that it finds into an abstract syntax graph. It never converts the same object twice; instead it caches all nodes it creates and reuses them any time their corresponding value appears.
+
+- lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with its corresponding identifier. This process of removing [dipoles][] converts the abstract syntax graph into a serializable abstract syntax tree.
+
+- finally, lave adds any assignment statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
+
 ## Installation
 
     $ npm install lave
@@ -95,3 +95,4 @@ By default, lave takes an `object` and returns an abstract syntax tree (AST) rep
 [Babel]: http://babeljs.io/docs/plugins/transform-es2015-modules-commonjs
 [dipoles]: https://en.wikipedia.org/wiki/Dipole_graph
 [JSON]: http://json.org/
+[global objects]: http://perfectionkills.com/unnecessarily-comprehensive-look-into-a-rather-insignificant-issue-of-global-objects-creation/
