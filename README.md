@@ -53,11 +53,11 @@ export default a;
 
 ## When would I want to use this?
 
-- **You want to transport relational data.** Since JSON can only represent hierarchical trees, attempts to serialize a graph require you to define a schema and ship code that reifies the relationship between objects at runtime. For example, if you have list of orders and a list of customers, and each order has a `customerId` propery, you need to write and ship code that turns this property into one that references the customer object directly.
+- **To transport relational data.** Since JSON can only represent hierarchical trees, attempts to serialize a graph require you to define a schema and ship code that reifies the relationship between objects at runtime. For example, if you have list of orders and a list of customers, and each order has a `customerId` propery, you need to write and ship code that turns this property into one that references the customer object directly.
 
-- **You want to colocate data and its dependent logic.** The past few years have seen a long overdue rethink of common best practices for web developers. From markup and logic in [React components][] to styles and markup in [Radium][], we've improved developer productivity by slicing concerns vertically (many concerns per component) instead of horizontally (many components per concern). Having the ability to ship tightly coupled logic and data in one file means fewer moving parts during deployment.
+- **To colocate data and dependent logic.** The past few years have seen a long overdue rethink of common best practices for web developers. From markup and logic in [React components][] to styles and markup in [Radium][], we've improved developer productivity by slicing concerns vertically (many concerns per component) instead of horizontally (many components per concern). Having the ability to ship tightly coupled logic and data in one file means fewer moving parts during deployment.
 
-- **You want to avoid runtime dependencies.** There are several libraries that give you the ability to serialize and parse graph data, but most of add a parser dependency to your recipients (in the case of JavaScript, usually a browser). Since lave requires only a JavaScript parser, you do not need to incorporate a runtime library to use it. If you prefer the safety of parsing without evaluation and don't mind the dependency, consider using something like [@benjamn][]'s excellent [arson][].
+- **To avoid runtime dependencies.** There are several libraries that give you the ability to serialize and parse graph data, but most of add a parser dependency to your recipients (in the case of JavaScript, usually a browser). Since lave requires only a JavaScript parser, you do not need to incorporate a runtime library to use it. If you prefer the safety of parsing without evaluation and don't mind the dependency, consider using something like [@benjamn][]'s excellent [arson][].
 
 ## How does lave work?
 
