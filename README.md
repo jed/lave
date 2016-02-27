@@ -93,3 +93,4 @@ By default, lave takes an `object` and returns an abstract syntax tree (AST) rep
 [Rollup]: http://rollupjs.org
 [Babel]: http://babeljs.io/docs/plugins/transform-es2015-modules-commonjs
 [dipoles]: https://en.wikipedia.org/wiki/Dipole_graph
+[JSON]: http://json.org/
