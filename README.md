@@ -4,7 +4,7 @@ lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does
 
 ## Why not just use JSON.stringify?
 
-JSON is great data transport, but can only handle a subset of the objects expressible in a JavaScript runtime. This usually results in lossy serializations at best, and `TypeError: Converting circular structure to JSON` at worst. While we can get around such issues by writing JavaScript code to parse this JSON back into the structures we want, now we have to ship that code out of band, which can be a headache.
+[JSON][] is great data transport, but can only handle a subset of the objects expressible in a JavaScript runtime. This usually results in lossy serializations at best, and `TypeError: Converting circular structure to JSON` at worst. While we can get around such issues by writing JavaScript code to parse this JSON back into the structures we want, now we have to ship that code out of band, which can be a headache.
 
 Instead of writing a parser for a new language that _can_ represent arbitrary JavaScript runtime values, I built lave to use the best language for the job: JavaScript itself. This allows it to handle the following structures that JSON can't.
 
@@ -26,9 +26,9 @@ lave attempts to build the most concise representation of an object, using all t
 
 - lave traverses the global object to cache paths for any host object. So if your structure contains `[].slice`, lave knows that you're looking for `Array.prototype.slice`, and uses that path in its place.
 
-- lave then traverses your object, converting each value that it finds into an abstract syntax graph. It never converts the same object twice; instead it caches all nodes it creates and reuses them any time their corresponding value appears.
+- lave then traverses your object, converting each value that it finds into it's most idiomatic abstract syntax graph. It never converts the same object twice; instead it caches all nodes it creates and reuses them any time their corresponding value appears.
 
-- lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with its corresponding identifier, converting the abstract syntax graph into a serializable abstract syntax tree.
+- lave then finds all expressions referenced more than once, and for each one, pulls the expression into a variable declaration, and replaces everywhere that it occurs with its corresponding identifier. This process of removing [dipoles][] converts the abstract syntax graph into a serializable abstract syntax tree.
 
 - finally, lave adds any assignment statements needed to fulfil circular references in your original graph, and then returns the expression corresponding to your original root value.
 
@@ -71,7 +71,7 @@ a;
 
 ### ast = lave(object, [options])
 
-By default, lave takes an `object` and returns an abstract syntax tree (herein as AST) representing the generated JavaScript. Any of the following `options` can also be specified:
+By default, lave takes an `object` and returns an abstract syntax tree (AST) representing the generated JavaScript. Any of the following `options` can also be specified:
 
 - `generate`: A function that takes an [ESTree][] AST and returns JavaScript code, such as through [escodegen][] or [babel-generator][]. If this is omitted, an AST will be returned, with any functions in the original object serialized using [toString][], and wrapped in an [eval][] call. If this is specified, a JavaScript string will be returned.
 - `format`: A string specifying the type of code to output, from the following:
@@ -92,3 +92,4 @@ By default, lave takes an `object` and returns an abstract syntax tree (herein a
 [Jamen Marz]: https://github.com/jamen
 [Rollup]: http://rollupjs.org
 [Babel]: http://babeljs.io/docs/plugins/transform-es2015-modules-commonjs
+[dipoles]: https://en.wikipedia.org/wiki/Dipole_graph
