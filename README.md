@@ -8,17 +8,18 @@ lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does
 
 Instead of writing a parser for a new language that _can_ represent arbitrary JavaScript runtime values, I built lave to use the best language for the job: JavaScript itself. This allows it to handle the following structures that JSON can't.
 
-Type                | JavaScript          | JSON.stringify               | lave
-------------------- | ------------------- | ---------------------------- | -------------------------
-Circular references | `a={}; a.self=a`    | :x: TypeError                | `var a={};a.self=a;a`
-Repeated references | `a={}; [a, a]`      | `[{}, {}]`                   | `var a={};[a,a]`
-Global object       | `global`            | :x: TypeError                | `(0,eval)('this')`
-Built-in objects    | `Array.prototype`   | `[]`                         | `Array.prototype`
-Boxed primitives    | `Object('abc')`     | `"abc"`                      | `Object('abc')`
-Functions           | `[function(){}]`    | `[null]`                     | `[function(){}]`
-Dates               | `new Date`          | `"2016-02-26T16:00:46.589Z"` | `new Date(1456502446589)`
-Sparse arrays       | `a=[]; a[2]=0; a`   | `[null,null,0]`              | `var a=Array(3);a[2]=0;a`
-Object properties   | `a=[0,1]; a.b=2; a` | `[0,1]`                      | `var a=[0,1];a.b=2;a`
+Type                | JavaScript          | JSON.stringify                         | lave
+------------------- | ------------------- | -------------------------------------- | -------------------------
+Circular references | `a={}; a.self=a`    | :x: TypeError                          | `var a={};a.self=a;a`
+Repeated references | `a={}; [a, a]`      | :warning: `[{}, {}]`                   | `var a={};[a,a]`
+Global object       | `global`            | :x: TypeError                          | `(0,eval)('this')`
+Built-in objects    | `Array.prototype`   | :warning: `[]`                         | `Array.prototype`
+Boxed primitives    | `Object('abc')`     | :warning: `"abc"`                      | `Object('abc')`
+Functions           | `[function(){}]`    | :warning: `[null]`                     | `[function(){}]`
+Dates               | `new Date`          | :warning: `"2016-02-26T16:00:46.589Z"` | `new Date(1456502446589)`
+Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | `var a=Array(3);a[2]=0;a`
+Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | `var a=[0,1];a.b=2;a`
+
 
 ## How does lave work?
 
