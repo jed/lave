@@ -13,6 +13,7 @@ const tests = {
   Boolean:   [ new Boolean(true)  , `Object(true)`                      ],
   undefined: [ void 0             , `undefined`                         ],
   null:      [ null               , `null`                              ],
+  NaN:       [ NaN                , `NaN`                               ],
   RegExp:    [ /regexp/img        , `/regexp/gim`                       ],
   Buffer:    [ new Buffer('A')    , `new Buffer('QQ==','base64')`       ],
   Date:      [ new Date(1e12)     , `new Date(1000000000000)`           ],
