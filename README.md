@@ -10,15 +10,15 @@ Instead of writing a parser for a new language that _can_ represent arbitrary Ja
 
 Type                | JavaScript          | JSON.stringify                         | lave
 ------------------- | ------------------- | -------------------------------------- | -------------------------
-Circular references | `a={}; a.self=a`    | :x: TypeError                          | `var a={};a.self=a;a`
-Repeated references | `a={}; [a, a]`      | :warning: `[{}, {}]`                   | `var a={};[a,a]`
-Global object       | `global`            | :x: TypeError                          | `(0,eval)('this')`
-Built-in objects    | `Array.prototype`   | :warning: `[]`                         | `Array.prototype`
-Boxed primitives    | `Object('abc')`     | :warning: `"abc"`                      | `Object('abc')`
-Functions           | `[function(){}]`    | :warning: `[null]`                     | `[function(){}]`
-Dates               | `new Date`          | :warning: `"2016-02-26T16:00:46.589Z"` | `new Date(1456502446589)`
-Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | `var a=Array(3);a[2]=0;a`
-Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | `var a=[0,1];a.b=2;a`
+Circular references | `a={}; a.self=a`    | :x: TypeError                          | :white_check_mark: `var a={};a.self=a;a`
+Repeated references | `a={}; [a, a]`      | :warning: `[{}, {}]`                   | :white_check_mark: `var a={};[a,a]`
+Global object       | `global`            | :x: TypeError                          | :white_check_mark: `(0,eval)('this')`
+Built-in objects    | `Array.prototype`   | :warning: `[]`                         | :white_check_mark: `Array.prototype`
+Boxed primitives    | `Object('abc')`     | :warning: `"abc"`                      | :white_check_mark: `Object('abc')`
+Functions           | `[function(){}]`    | :warning: `[null]`                     | :white_check_mark: `[function(){}]`
+Dates               | `new Date`          | :warning: `"2016-02-26T16:00:46.589Z"` | :white_check_mark: `new Date(1456502446589)`
+Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=Array(3);a[2]=0;a`
+Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
 
 
 ## How does lave work?
