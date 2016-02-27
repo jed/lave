@@ -90,6 +90,7 @@ By default, lave takes an `object` and returns an abstract syntax tree (AST) rep
 ## Addenda
 
 - Many thanks to [Jamen Marz][] for graciously providing the `lave` name on npm.
+- Right before publishing this, I discovered that [uneval][] was a thing.
 
 [eval]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
 [JSON.stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
@@ -107,3 +108,4 @@ By default, lave takes an `object` and returns an abstract syntax tree (AST) rep
 [Radium]: https://github.com/FormidableLabs/radium
 [@benjamn]: https://github.com/benjamn
 [arson]: https://github.com/benjamn/arson
+[uneval]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/uneval
