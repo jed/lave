@@ -54,7 +54,7 @@ a;
 
 ## How does lave work?
 
-lave uses all of the syntax available in JavaScript to build the most concise representation of an object, such as by preferring literals over assignment. It does this in the following order:
+lave uses all of the syntax available in JavaScript to build the most concise representation of an object, such as by preferring literals (`[1,2]`) over assignment (`var a=[];a[0]=1;a[1]=2`). Here's how it works:
 
 - lave traverses the global object to cache paths for any host object. So if your structure contains `[].slice`, lave knows that you're looking for `Array.prototype.slice`, and uses that path in its place.
 
@@ -96,3 +96,5 @@ By default, lave takes an `object` and returns an abstract syntax tree (AST) rep
 [dipoles]: https://en.wikipedia.org/wiki/Dipole_graph
 [JSON]: http://json.org/
 [global objects]: http://perfectionkills.com/unnecessarily-comprehensive-look-into-a-rather-insignificant-issue-of-global-objects-creation/
+[React components]: https://facebook.github.io/react/docs/reusable-components.html
+[Radium]: https://github.com/FormidableLabs/radium
