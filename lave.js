@@ -209,16 +209,28 @@ export default function(object, options) {
         break
 
       case Object.prototype:
-        node.type = 'ObjectExpression'
-        node.properties = Array.from(properties).map(pair => {
-          properties.delete(pair[0])
+        node.properties = []
+        for (let property of properties) {
+          let element = getExpression(property[1].value)
 
-          return {
+          if (!element.type) {
+            node.properties.push({
+              type: 'Property',
+              key: getExpression(property[0]),
+              value: getExpression(null)
+            })
+            continue
+          }
+
+          properties.delete(property[0])
+          node.properties.push({
             type: 'Property',
             key: getExpression(pair[0]),
             value: getExpression(pair[1].value)
-          }
-        })
+          })
+        }
+
+        node.type = 'ObjectExpression'
         break
 
       default:
