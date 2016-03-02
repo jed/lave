@@ -23,6 +23,8 @@ const tests = {
   Error:     [ new Error('XXX')   , `new Error('XXX')`        ],
   Array:     [ [1,2,3]            , `[1,2,3]`                 ],
   sparse:    [ Array(10)          , `var a=[];a.length=10;a`  ],
+  Set:       [ new Set([1,2,3])   , `new Set([1,2,3])`        ],
+  Map:       [ new Map([[1,2]])   , `new Map([[1,2]])`        ],
   global:    [ root               , `(0,eval)('this')`        ],
   slice:     [ [].slice           , `Array.prototype.slice`   ],
   cycle:     [ (a=>a[0]=a)([])    , `var a=[,];a[0]=a;a`      ],

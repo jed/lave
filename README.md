@@ -19,6 +19,7 @@ Functions           | `[function(){}]`    | :warning: `[null]`                  
 Dates               | `new Date(1e12)`    | :warning: `"2001-09-09T01:46:40.000Z"` | :white_check_mark: `new Date(1000000000000)`
 NaN                 | `NaN`               | :warning: `null`                       | :white_check_mark: `NaN`
 Infinity            | `Infinity`          | :warning: `null`                       | :white_check_mark: `Infinity`
+Sets and Maps       | `new Set([1,2,3])`  | :warning: `{}`                         | :white_check_mark: `new Set([1,2,3])`
 Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=[];a[2]=0;a`
 Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
 
