@@ -79,6 +79,8 @@ lave uses all of the syntax available in JavaScript to build the most concise re
 
 ## Installation
 
+lave can be used for Node.js environments of 4.x and above.
+
     $ npm install lave
 
 ## API
