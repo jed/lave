@@ -45,7 +45,7 @@ var a = [
     function (){},
     new Date(1456522677247),
     null,
-    new Buffer('QQ==', 'base64'),
+    Buffer('QQ==', 'base64'),
     (0, eval)('this')
 ];
 a[2] = a;
