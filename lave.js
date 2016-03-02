@@ -201,11 +201,38 @@ export default function(object, options) {
 
       case Set.prototype:
       case WeakSet.prototype:
-      case Map.prototype:
-      case WeakMap.prototype:
         node.type = 'NewExpression'
         node.callee = getExpression(value.constructor)
         node.arguments = [getExpression(Array.from(value))]
+        break
+
+      case Map.prototype:
+      case WeakMap.prototype:
+        let entries = Array.from(value)
+
+        for (let entry of entries) {
+          let element = getExpression(entry[1])
+          if (!element.type) {
+            entry.pop()
+            statements.push({
+              type: 'ExpressionStatement',
+              expression: {
+                type: 'CallExpression',
+                callee: {
+                  type: 'MemberExpression',
+                  object: node,
+                  computed: false,
+                  property: {type: 'Identifier', name: 'set'}
+                },
+                arguments: [getExpression(entry[0]), element]
+              }
+            })
+          }
+        }
+
+        node.arguments = [getExpression(entries)]
+        node.callee = getExpression(value.constructor)
+        node.type = 'NewExpression'
         break
 
       case Object.prototype:
