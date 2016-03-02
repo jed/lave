@@ -24,6 +24,8 @@ Sparse arrays       | `a=[]; a[2]=0; a`     | :warning: `[null,null,0]`         
 Object properties   | `a=[0,1]; a.b=2; a`   | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
 Custom prototypes   | `Object.create(null)` | :warning: `{}`                         | :white_check_mark: `Object.create(null)`
 
+Keep in mind that there are some things that not even lave can stringify, such as function closures, or built-in native functions.
+
 ## Example
 
 This command...
