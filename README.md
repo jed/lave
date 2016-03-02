@@ -20,6 +20,7 @@ Dates               | `new Date`          | :warning: `"2016-02-26T16:00:46.589Z
 NaN                 | `NaN`               | :warning: `null`                       | :white_check_mark: `NaN`
 Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=Array(3);a[2]=0;a`
 Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
+Infinity            | `Infinity`          | :warning: `null`                       | :white_check_mark: `Infinity`
 
 ## Example
 
