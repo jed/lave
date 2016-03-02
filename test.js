@@ -23,7 +23,8 @@ const tests = {
   global:    [ root               , `(0,eval)('this')`                  ],
   slice:     [ [].slice           , `Array.prototype.slice`             ],
   cycle:     [ (a=>a[0]=a)([])    , `var a=[null];a[0]=a;a`             ],
-  dipole:    [ (a=>[a,a])({})     , `var a={};[a,a]`                    ]
+  dipole:    [ (a=>[a,a])({})     , `var a={};[a,a]`                    ],
+  Infinity:  [ Infinity           , `Infinity`                          ]
 }
 
 const format = {compact: true, semicolons: false}
