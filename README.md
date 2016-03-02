@@ -16,8 +16,8 @@ Global object       | `global`            | :x: TypeError                       
 Built-in objects    | `Array.prototype`   | :warning: `[]`                         | :white_check_mark: `Array.prototype`
 Boxed primitives    | `Object('abc')`     | :warning: `"abc"`                      | :white_check_mark: `Object('abc')`
 Functions           | `[function(){}]`    | :warning: `[null]`                     | :white_check_mark: `[function(){}]`
-Dates               | `new Date`          | :warning: `"2016-02-26T16:00:46.589Z"` | :white_check_mark: `new Date(1456502446589)`
-Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=Array(3);a[2]=0;a`
+Dates               | `new Date(1e12)`    | :warning: `"2001-09-09T01:46:40.000Z"` | :white_check_mark: `new Date(1000000000000)`
+Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=[];a[2]=0;a`
 Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
 
 ## Example

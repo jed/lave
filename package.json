@@ -2,13 +2,13 @@
   "name": "lave",
   "version": "1.0.1",
   "main": "index.js",
-  "jsnext:main": "lib/lave.js",
+  "jsnext:main": "lave.js",
   "devDependencies": {
     "escodegen": "^1.8.0",
     "rollup": "^0.25.4"
   },
   "scripts": {
-    "build": "rollup lib/lave.js -f cjs -o index.js",
+    "build": "rollup lave.js -f cjs -o index.js",
     "test": "npm run build && rollup test.js -e escodegen,assert,. -f cjs | node"
   },
   "engines": {
