@@ -182,7 +182,7 @@ export default function(object, options) {
 
         let length = properties.get('length').value
         let lastIndex = String(length - 1)
-        if (properties.has(lastIndex)) properties.delete('length')
+        if (!length || properties.has(lastIndex)) properties.delete('length')
 
         for (let property of properties) {
           if (property[0] != node.elements.length) break

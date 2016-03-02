@@ -8,20 +8,21 @@ lave is [eval][] in reverse; it does for JavaScript what [JSON.stringify][] does
 
 Instead of writing a parser for a new language that _can_ represent arbitrary JavaScript runtime values, I built lave to use the best language for the job: JavaScript itself. This allows it to handle the following structures that JSON can't.
 
-Type                | JavaScript          | JSON.stringify                         | lave
-------------------- | ------------------- | -------------------------------------- | -------------------------
-Circular references | `a={}; a.self=a`    | :x: TypeError                          | :white_check_mark: `var a={};a.self=a;a`
-Repeated references | `a={}; [a, a]`      | :warning: `[{}, {}]`                   | :white_check_mark: `var a={};[a,a]`
-Global object       | `global`            | :x: TypeError                          | :white_check_mark: `(0,eval)('this')` [?][global objects]
-Built-in objects    | `Array.prototype`   | :warning: `[]`                         | :white_check_mark: `Array.prototype`
-Boxed primitives    | `Object('abc')`     | :warning: `"abc"`                      | :white_check_mark: `Object('abc')`
-Functions           | `[function(){}]`    | :warning: `[null]`                     | :white_check_mark: `[function(){}]`
-Dates               | `new Date(1e12)`    | :warning: `"2001-09-09T01:46:40.000Z"` | :white_check_mark: `new Date(1000000000000)`
-NaN                 | `NaN`               | :warning: `null`                       | :white_check_mark: `NaN`
-Infinity            | `Infinity`          | :warning: `null`                       | :white_check_mark: `Infinity`
-Sets and Maps       | `new Set([1,2,3])`  | :warning: `{}`                         | :white_check_mark: `new Set([1,2,3])`
-Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=[];a[2]=0;a`
-Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
+Type                | JavaScript            | JSON.stringify                         | lave
+------------------- | --------------------- | -------------------------------------- | -------------------------
+Circular references | `a={}; a.self=a`      | :x: TypeError                          | :white_check_mark: `var a={};a.self=a;a`
+Repeated references | `a={}; [a, a]`        | :warning: `[{}, {}]`                   | :white_check_mark: `var a={};[a,a]`
+Global object       | `global`              | :x: TypeError                          | :white_check_mark: `(0,eval)('this')` [?][global objects]
+Built-in objects    | `Array.prototype`     | :warning: `[]`                         | :white_check_mark: `Array.prototype`
+Boxed primitives    | `Object('abc')`       | :warning: `"abc"`                      | :white_check_mark: `Object('abc')`
+Functions           | `[function(){}]`      | :warning: `[null]`                     | :white_check_mark: `[function(){}]`
+Dates               | `new Date(1e12)`      | :warning: `"2001-09-09T01:46:40.000Z"` | :white_check_mark: `new Date(1000000000000)`
+NaN                 | `NaN`                 | :warning: `null`                       | :white_check_mark: `NaN`
+Infinity            | `Infinity`            | :warning: `null`                       | :white_check_mark: `Infinity`
+Sets and Maps       | `new Set([1,2,3])`    | :warning: `{}`                         | :white_check_mark: `new Set([1,2,3])`
+Sparse arrays       | `a=[]; a[2]=0; a`     | :warning: `[null,null,0]`              | :white_check_mark: `var a=[];a[2]=0;a`
+Object properties   | `a=[0,1]; a.b=2; a`   | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
+Custom prototypes   | `Object.create(null)` | :warning: `{}`                         | :white_check_mark: `Object.create(null)`
 
 ## Example
 
