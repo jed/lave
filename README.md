@@ -17,6 +17,7 @@ Built-in objects    | `Array.prototype`   | :warning: `[]`                      
 Boxed primitives    | `Object('abc')`     | :warning: `"abc"`                      | :white_check_mark: `Object('abc')`
 Functions           | `[function(){}]`    | :warning: `[null]`                     | :white_check_mark: `[function(){}]`
 Dates               | `new Date(1e12)`    | :warning: `"2001-09-09T01:46:40.000Z"` | :white_check_mark: `new Date(1000000000000)`
+NaN                 | `NaN`               | :warning: `null`                       | :white_check_mark: `NaN`
 Sparse arrays       | `a=[]; a[2]=0; a`   | :warning: `[null,null,0]`              | :white_check_mark: `var a=[];a[2]=0;a`
 Object properties   | `a=[0,1]; a.b=2; a` | :warning: `[0,1]`                      | :white_check_mark: `var a=[0,1];a.b=2;a`
 
