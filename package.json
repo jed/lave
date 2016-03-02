@@ -1,6 +1,8 @@
 {
   "name": "lave",
   "version": "1.0.1",
+  "description": "eval in reverse",
+  "repository": "jed/lave",
   "main": "index.js",
   "jsnext:main": "lib/lave.js",
   "devDependencies": {
