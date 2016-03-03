@@ -201,9 +201,37 @@ export default function(object, options) {
 
       case Set.prototype:
       case WeakSet.prototype:
+        let members = Array.from(value)
+        let index = 0
+
+        for (let member of members) {
+          let element = getExpression(member)
+          if (element.type) index++
+          else break
+        }
+
         node.type = 'NewExpression'
         node.callee = getExpression(value.constructor)
-        node.arguments = [getExpression(Array.from(value))]
+        node.arguments = []
+        if (index > 0) {
+          node.arguments.push(getExpression(members.slice(0, index)))
+        }
+
+        for (let member of members.slice(index)) {
+          statements.push({
+            type: 'ExpressionStatement',
+            expression: {
+              type: 'CallExpression',
+              callee: {
+                type: 'MemberExpression',
+                object: node,
+                computed: false,
+                property: {type: 'Identifier', name: 'add'}
+              },
+              arguments: [getExpression(member)]
+            }
+          })
+        }
         break
 
       case Map.prototype:
