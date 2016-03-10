@@ -79,9 +79,13 @@ lave uses all of the syntax available in JavaScript to build the most concise re
 
 ## Installation
 
-lave can be used for Node.js environments of 4.x and above.
+Please run the following command to install lave:
 
-    $ npm install lave
+```bash
+$ npm install lave
+```
+
+The library has been tested on Node 4.x and 5.x.
 
 ## API
 
