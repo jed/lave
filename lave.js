@@ -280,8 +280,8 @@ export default function(object, options) {
           properties.delete(property[0])
           node.properties.push({
             type: 'Property',
-            key: getExpression(pair[0]),
-            value: getExpression(pair[1].value)
+            key: getExpression(property[0]),
+            value: getExpression(property[1].value)
           })
         }
 
