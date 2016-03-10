@@ -1,3 +1,11 @@
+# whitelisted branches
+branches:
+  only:
+    - master
+
 language: node_js
 node_js:
-  - "4.1"
+  - "node"
+  - "5"
+  - "4"
+
