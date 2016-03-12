@@ -37,8 +37,7 @@ const tests = {
 }
 
 const format = {compact: true, semicolons: false}
-const generate = ast => escodegen.generate(ast, {format})
-const options = {generate}
+const options = {generate: ast => escodegen.generate(ast, {format})}
 
 for (let name in tests) {
   let expected = tests[name][1]
