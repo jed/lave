@@ -4,6 +4,9 @@ import {equal} from 'assert'
 import escodegen from 'escodegen'
 import lave from '.'
 
+const globalRef = { foo: 23 }
+exports.globalRef = globalRef
+
 const tests = {
   number:    [ 123                           , `123`                                 ],
   negative:  [ -123                          , `-123`                                ],
@@ -28,6 +31,7 @@ const tests = {
   cycleMap:  [ (a=>a.set(0,a))(new Map)      , `var a=new Map([[0]]);a.set(0,a);a`   ],
   cycleSet:  [ (a=>a.add(a).add(0))(new Set) , `var a=new Set();a.add(a);a.add(0);a` ],
   global:    [ root                          , `(0,eval)('this')`                    ],
+  globalRef: [ globalRef                     , `exports.globalRef`                   ],
   slice:     [ [].slice                      , `Array.prototype.slice`               ],
   arrcycle:  [ (a=>a[0]=a)([])               , `var a=[,];a[0]=a;a`                  ],
   objcycle:  [ (a=>a.a=a)({})                , `var a={'a':null};a.a=a;a`            ],
@@ -49,6 +53,9 @@ for (let name in tests) {
     actual ${name}: ${actual}
   `)
 }
+
+options.globalRefs = false
+equal(lave(globalRef, options), `({'foo':23})`)
 
 options.format = 'module'
 equal(lave(1, options), 'export default 1')

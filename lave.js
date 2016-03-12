@@ -7,7 +7,7 @@ export default function(object, options) {
   var placeholder = Math.random().toString(36).replace(/../, '_')
   var functionPattern = RegExp(`${placeholder}(\\d+)`, 'g')
 
-  let cache = new Globals
+  let cache = new Globals(options.globalRefs)
   let statements = []
 
   let expression = getExpression(object)
@@ -391,7 +391,7 @@ function isNativeFunction(fn) {
   return length === source.length
 }
 
-function Globals() {
+function Globals(recursive) {
   let globals = new Map([
     [NaN, {type: 'Identifier', name: 'NaN'}],
     [null, {type: 'Literal', value: null}],
@@ -410,7 +410,7 @@ function Globals() {
     }]
   ])
 
-  return crawl(globals, (0, eval)('this'))
+  return recursive === false ? globals : crawl(globals, (0, eval)('this'))
 }
 
 function crawl(map, value, object) {
