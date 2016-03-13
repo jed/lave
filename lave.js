@@ -413,8 +413,12 @@ function Globals() {
   return crawl(globals, (0, eval)('this'))
 }
 
+const STANDARD_GLOBALS = require('vm')
+  .runInNewContext('Object.getOwnPropertyNames(this)')
+  .concat('Buffer')
+
 function crawl(map, value, object) {
-  let names = Object.getOwnPropertyNames(value)
+  let names = object ? Object.getOwnPropertyNames(value) : STANDARD_GLOBALS
   let properties = []
 
   for (let name of names) {
