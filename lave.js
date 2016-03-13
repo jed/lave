@@ -62,7 +62,7 @@ export default function(object, options) {
 
   if (!options.generate) return program
 
-  let code = generate(program)
+  let code = options.generate(program)
   return code.replace(functionPattern, (_, i) => {
     return Array.from(functions)[i].toString().replace(/^function |^/, 'function ')
   })
