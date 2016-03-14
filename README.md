@@ -59,7 +59,7 @@ export default a;
 
 ## When would I want to use this?
 
-- **To transport relational data.** Since JSON can only represent hierarchical trees, attempts to serialize a graph require you to define a schema and ship code that reifies the relationship between objects at runtime. For example, if you have list of orders and a list of customers, and each order has a `customerId` propery, you need to write and ship code that turns this property into one that references the customer object directly.
+- **To transport relational data.** Since JSON can only represent hierarchical trees, attempts to serialize a graph require you to define a schema and ship code that reifies the relationship between objects at runtime. For example, if you have list of orders and a list of customers, and each order has a `customerId` property, you need to write and ship code that turns this property into one that references the customer object directly.
 
 - **To colocate data and dependent logic.** The past few years have seen a long overdue rethink of common best practices for web developers. From markup and logic in [React components][] to styles and markup in [Radium][], we've improved developer productivity by slicing concerns vertically (many concerns per component) instead of horizontally (many components per concern). Having the ability to ship tightly coupled logic and data in one file means fewer moving parts during deployment.
 
