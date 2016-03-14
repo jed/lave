@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "rollup lave.js -f cjs -o index.js",
+    "prepublish": "npm run build",
     "test": "npm run build && rollup test.js -e escodegen,assert,. -f cjs | node"
   },
   "engines": {
