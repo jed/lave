@@ -23,5 +23,6 @@
     "circular",
     "json",
     "serialize"
-  ]
+  ],
+  "tonicExampleFilename": "example.js"
 }
