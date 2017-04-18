@@ -98,6 +98,7 @@ By default, lave takes an `object` and returns an abstract syntax tree (AST) rep
   - `expression` (default): Returns code in which the last statement is result expression, such as `var a={};[a, a];`. This is useful when the code is evaluated with [eval][].
   - `function`: Returns the code as a function expression, such as `(function(){var a={};return[a, a]})`. This is useful for inlining as an expression without polluting scope.
   - `module`: Returns the code as an ES6 module export, such as `var a={};export default[a, a];`. This is currently useful for integration with a module build process, such as [Rollup][] or [Babel][] transforms.
+- `globalRefs`: Whether to search the global scope for references. Set this to `false` when the code will be evaluated in a different context.
 
 ## Addenda
 
