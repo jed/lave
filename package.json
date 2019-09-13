@@ -24,5 +24,8 @@
     "json",
     "serialize"
   ],
-  "tonicExampleFilename": "example.js"
+  "tonicExampleFilename": "example.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@jed"
+  }
 }
